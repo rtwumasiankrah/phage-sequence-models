@@ -1,0 +1,10 @@
+# --- core ---
+numpy>=1.26.0
+torch>=2.2.0  # CPU-only install: pip install torch --index-url https://download.pytorch.org/whl/cpu
+scikit-learn>=1.4.0
+matplotlib>=3.8.0
+pandas>=2.0.0
+tqdm>=4.66.0
+
+# --- dev / CI ---
+pytest>=8.0.0

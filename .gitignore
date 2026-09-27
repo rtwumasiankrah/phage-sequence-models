@@ -1,0 +1,21 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# Data (large / downloaded)
+data/genomes/
+data/demo/
+outputs/
+
+# Checkpoints
+*.pt
+
+# Secrets
+.env
+
+# OS / editor
+.DS_Store
+.idea/
+.vscode/
