@@ -20,6 +20,25 @@ The repo ships with the complete 50 kb genome of *Mycobacterium* phage
 SEA-PHAGES research — plus a synthetic data generator so everything runs
 without network access.
 
+## Live demo
+
+The `spaces/` folder is a push-ready **Hugging Face Spaces** demo: a Gradio app
+serving the trained CNN cluster classifier. Paste DNA (or upload a FASTA file)
+and it predicts the phage cluster by majority vote over 512-token 6-mer
+windows, with a per-window vote chart. It reuses the repo's real pipeline code
+(vendored under `spaces/src/`) and a ~2 MB trained CNN (`spaces/cnn_demo.pt`,
+1.00 accuracy on the synthetic test set).
+
+Go-live is three steps — see `spaces/README.md`:
+
+1. Create a new Space on huggingface.co/spaces with the **Gradio** SDK.
+2. Upload the contents of `spaces/` (including `src/` and `examples/`) to the Space root.
+3. The Space builds from `requirements.txt` and launches `app.py` — no extra setup.
+
+<!-- Uncomment once the Space exists:
+[![Hugging Face Spaces](https://img.shields.io/badge/🤗%20Hugging%20Face-Spaces-blue)](https://huggingface.co/spaces/rtwumasiankrah/phage-cluster-classifier)
+-->
+
 ## How it works
 
 **Classification pipeline:**

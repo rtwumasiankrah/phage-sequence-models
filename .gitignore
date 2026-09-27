@@ -11,6 +11,7 @@ outputs/
 
 # Checkpoints
 *.pt
+!spaces/cnn_demo.pt
 
 # Secrets
 .env

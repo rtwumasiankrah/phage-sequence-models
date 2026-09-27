@@ -1,0 +1,30 @@
+{
+  "model": "cnn",
+  "clusters": [
+    "cluster_A",
+    "cluster_B",
+    "cluster_C"
+  ],
+  "cluster_to_idx": {
+    "cluster_A": 0,
+    "cluster_B": 1,
+    "cluster_C": 2
+  },
+  "k": 6,
+  "stride": 6,
+  "window_tokens": 512,
+  "vocab_size": 4098,
+  "pad_id": 0,
+  "unk_id": 1,
+  "embed_dim": 64,
+  "hidden_dim": 128,
+  "num_filters": 128,
+  "test_accuracy": 1.0,
+  "test_f1_macro": 1.0,
+  "trained_on": "synthetic cluster-descended demo genomes (data/demo), 72 genomes",
+  "examples": {
+    "cluster_A": "examples/cluster_A_example.fasta",
+    "cluster_B": "examples/cluster_B_example.fasta"
+  },
+  "caveat": "Demo model trained on synthetic data. Metrics validate pipeline behavior only and do not establish real-world biological performance."
+}
