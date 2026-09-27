@@ -1,6 +1,7 @@
 # 🧬 Phage Sequence Models
 
 [![CI](https://github.com/rtwumasiankrah/phage-sequence-models/actions/workflows/ci.yml/badge.svg)](https://github.com/rtwumasiankrah/phage-sequence-models/actions/workflows/ci.yml)
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/rtwumasiankrah/phage-sequence-models/blob/main/notebooks/phage_sequence_models.ipynb)
 [![Python 3.10+](https://img.shields.io/badge/python-3.10%2B-blue.svg)](https://www.python.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
@@ -21,40 +22,32 @@ without network access.
 
 ## How it works
 
-```
-┌─────────────┐   ┌──────────────┐   ┌───────────────┐   ┌──────────────────┐
-│ FASTA       │──▶│ k-mer token- │──▶│ Genome window │──▶│ CNN / BiLSTM /   │
-│ genomes     │   │ ization     │   │ ing (512 tok) │   │ Transformer      │
-│ (+ labels)  │   │ k=6, fixed │   │ label by      │   │ classifier       │
-└─────────────┘   │ vocab 4098 │   │ majority vote │   └────────┬─────────┘
-                  └──────────────┘   └───────────────┘            │
-                                                                 ▼
-                                                       ┌──────────────────┐
-                                                       │ Cluster prediction│
-                                                       │ per window + per  │
-                                                       │ genome            │
-                                                       └──────────────────┘
+**Classification pipeline:**
 
-┌─────────────┐   ┌──────────────┐   ┌───────────────────────────────┐
-│ Related     │──▶│ Per-window   │──▶│ Divergence tracks vs. cluster │
-│ genomes     │   │ k-mer sets   │   │ medoid → hotspot detection →  │
-└─────────────┘   └──────────────┘   │ enriched k-mer motifs         │
-                                     └───────────────────────────────┘
-```
-
-- **Tokenization**: non-overlapping 6-mers map deterministically to a fixed
+- **Input** — FASTA genomes with cluster labels.
+- **Tokenization** — non-overlapping 6-mers map deterministically to a fixed
   4,098-token vocabulary (base-4 encoding) — no fitting step, identical
   behavior on synthetic and real genomes.
-- **Windowing**: genomes are split into 512-token windows, each inheriting the
-  genome's cluster label; genome-level predictions use majority vote. Splits
-  are stratified **by genome**, so no genome leaks windows across train/test.
-- **Models**: a multi-scale 1D CNN (motif detector), a BiLSTM (order-sensitive
-  context), and a Transformer encoder with CLS token (long-range
-  dependencies) — one shared training loop, early stopping on val F1.
-- **Mutation trends**: per-window k-mer Jaccard distance to the cluster
-  medoid gives a divergence track; windows above mean + 2σ are flagged as
-  hotspots, and k-mers enriched inside hotspots are reported as candidate
-  hypervariable motifs. Alignment-free and honest about its limits (see below).
+- **Windowing** — genomes are split into 512-token windows, each inheriting
+  the genome's cluster label; genome-level predictions use majority vote.
+  Splits are stratified **by genome**, so no genome leaks windows across
+  train/test.
+- **Models** — a multi-scale 1D CNN (motif detector), a BiLSTM
+  (order-sensitive context), and a Transformer encoder with CLS token
+  (long-range dependencies), all trained through one shared loop with early
+  stopping on validation F1.
+- **Output** — cluster prediction per window and per genome.
+
+**Mutation-trend pipeline:**
+
+- **Input** — related genomes within a cluster.
+- **Divergence tracks** — per-window k-mer Jaccard distance to the cluster
+  medoid genome.
+- **Hotspot detection** — windows above median + scaled MAD are flagged as
+  hotspots.
+- **Output** — hotspot windows plus the k-mers enriched inside them, as
+  candidate hypervariable motifs. Alignment-free, and honest about its limits
+  (see below).
 
 ## Quickstart
 
@@ -113,6 +106,7 @@ divergence spikes against the cluster medoid (see
 | `src/mutations.py` | Alignment-free divergence tracks, hotspot detection |
 | `src/viz.py` | Training curves, confusion matrices, divergence plots |
 | `scripts/` | `download_genomes.py`, `make_demo_data.py`, `train.py`, `evaluate.py`, `analyze_mutations.py` |
+| `notebooks/` | Thin Colab walkthrough — shells out to `scripts/`, runs end-to-end in the browser |
 | `data/GingkoMaracino_MK359341.fasta` | Real 50 kb phage genome co-discovered by the author |
 | `tests/` | Unit tests (tokenizer, splits, hotspot recovery, model shapes) |
 
