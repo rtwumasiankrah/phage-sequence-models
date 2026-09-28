@@ -2,6 +2,7 @@
 
 [![CI](https://github.com/rtwumasiankrah/phage-sequence-models/actions/workflows/ci.yml/badge.svg)](https://github.com/rtwumasiankrah/phage-sequence-models/actions/workflows/ci.yml)
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/rtwumasiankrah/phage-sequence-models/blob/main/notebooks/phage_sequence_models.ipynb)
+[![Hugging Face Spaces](https://img.shields.io/badge/🤗%20Hugging%20Face-Spaces-blue)](https://huggingface.co/spaces/rtwumasiankrah/phage-cluster-classifier)
 [![Python 3.10+](https://img.shields.io/badge/python-3.10%2B-blue.svg)](https://www.python.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
@@ -35,9 +36,7 @@ Go-live is three steps — see `spaces/README.md`:
 2. Upload the contents of `spaces/` (including `src/` and `examples/`) to the Space root.
 3. The Space builds from `requirements.txt` and launches `app.py` — no extra setup.
 
-<!-- Uncomment once the Space exists:
-[![Hugging Face Spaces](https://img.shields.io/badge/🤗%20Hugging%20Face-Spaces-blue)](https://huggingface.co/spaces/rtwumasiankrah/phage-cluster-classifier)
--->
+Try it live: [phage-cluster-classifier](https://huggingface.co/spaces/rtwumasiankrah/phage-cluster-classifier)
 
 ## How it works
 
